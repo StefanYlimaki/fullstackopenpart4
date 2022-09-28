@@ -1,0 +1,9 @@
+POST http://localhost:3003/api/blogs/
+Content-Type: application/json
+
+{
+    "author": "Pekka Puupää",
+    "title": "Pekka Puupään seikkailut",
+    "url": "http://pekkapuupaa.com",
+    "votes": 0
+}
