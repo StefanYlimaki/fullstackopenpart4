@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +17,13 @@
   "bugs": {
     "url": "https://github.com/StefanYlimaki/fullstackopenpart4/issues"
   },
-  "homepage": "https://github.com/StefanYlimaki/fullstackopenpart4#readme"
+  "homepage": "https://github.com/StefanYlimaki/fullstackopenpart4#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "mongoose": "^6.6.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
 }
