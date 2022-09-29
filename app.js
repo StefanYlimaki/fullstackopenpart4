@@ -24,6 +24,12 @@ app.use(middleware.requestLogger)
 
 app.use('/api/blogs', blogsRouter)
 
+app.get('/', (request, response) => {
+
+  response.json('Hello World!')
+
+})
+
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
 
