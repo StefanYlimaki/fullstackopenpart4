@@ -6,6 +6,43 @@ const api = supertest(app)
 const bcrypt = require('bcrypt')
 const User = require('../models/user')
 
+describe('User addition', () => {
+  beforeEach(async () => {
+    await User.deleteMany({})
+  })
+
+  test('4.16 invalid users dont get added', async () => {
+
+    const usersAtStart = await helper.usersInDb()
+
+    const userWithInvalidPassword = {
+      username: 'testi',
+      name: 'testi käyttäjä',
+      password: 'te'
+    }
+
+    const userWithInvalidUsername = {
+      username: 'te',
+      name: 'testi köyttäjä',
+      password: 'testi'
+    }
+
+    await api
+      .post('/api/users')
+      .send(userWithInvalidPassword)
+      .expect(400)
+
+    await api
+      .post('/api/users')
+      .send(userWithInvalidUsername)
+      .expect(400)
+
+
+    const usersAtEnd = await helper.usersInDb()
+    expect(usersAtStart).toHaveLength(usersAtEnd.length)
+  })
+})
+
 describe('omia testejä', () => {
   beforeEach(async () => {
     await User.deleteMany({})
