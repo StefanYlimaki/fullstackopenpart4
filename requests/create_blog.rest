@@ -1,8 +1,12 @@
 POST http://localhost:3003/api/blogs/
 Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InN0ZWZmZSIsImlkIjoiNjMzNmIzMDU2MjI0NGVjNGM2NTgzM2JiIiwiaWF0IjoxNjY0NTMyNzY2fQ.3pHFOZIK4J6CB4wsGBUxVwlFAXA8_9r8O0fxBKE3kf8
 
-{
-    "title": "Pekka Puupää",
-    "id": "http://pekkapuupaa.com",
-    "votes": 0
-}
+{                                   
+  "author": "Michael Chan",           
+  "title": "React patterns",          
+  "url": "https://reactpatterns.com/",
+  "likes": 10,                       
+  "id": "5a422a851b54a676234d17f7",
+  "userId": "6336b30562244ec4c65833bb"    
+}                                   

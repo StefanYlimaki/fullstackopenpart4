@@ -1,6 +1,12 @@
 const listHelper = require('../utils/list_helper')
 
-describe('total likes', () => {
+test('4.3 dummy returs one', () => {
+  const blogs = []
+  const result = listHelper.dummy(blogs)
+  expect(result).toBe(1)
+})
+
+describe('4.4 total likes', () => {
   const listWithOneBlog = [
     {
       _id: '5a422aa71b54a676234d17f8',
@@ -12,6 +18,12 @@ describe('total likes', () => {
     },
   ]
 
+  test('when the list is empty, 0 is returned', () => {
+    const bloglist = []
+    const result = listHelper.totalLikes(bloglist)
+    expect(result).toBe(0)
+  })
+
   test('when list has only one blog equals the likes of that', () => {
     const result = listHelper.totalLikes(listWithOneBlog)
     expect(result).toBe(5)
@@ -21,33 +33,32 @@ describe('total likes', () => {
     const result = listHelper.totalLikes(blogs)
     expect(result).toBe(60)
   })
-
 })
 
-describe('favorite blog', () => {
-  test('when passed an array of blogs, most popular blog\'s id is returned', () => {
+describe('4.5 favorite blog', () => {
+  test('return most liked blog', () => {
     const result = listHelper.favoriteBlog(blogs)
-    expect(result).toBe('5a422b3a1b54a676234d17f9')
+    expect(result).toEqual('5a422b3a1b54a676234d17f9')
   })
 })
 
-describe('most blogs', () => {
+describe('4.6 most blogs', () => {
   const answer = {
     author: 'Edsger W. Dijkstra',
     blogs: 4
   }
-  test('when list of blogs is passed equals the author and their amount of the blogs', () => {
+  test('return author with most blogs', () => {
     const result = listHelper.mostBlogs(blogs)
     expect(result).toEqual(answer)
   })
 })
 
-describe('most likes', () => {
+describe('4.7 most likes', () => {
   const answer = {
     author: 'Edsger W. Dijkstra',
     likes: 34
   }
-  test('when list of blogs is passed equals the author and their amount of likes', () => {
+  test('return author with most likes', () => {
     const result = listHelper.mostLikes(blogs)
     expect(result).toEqual(answer)
   })
