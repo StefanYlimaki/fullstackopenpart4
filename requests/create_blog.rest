@@ -1,6 +1,6 @@
 POST http://localhost:3003/api/blogs/
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RhdXMiLCJpZCI6IjYzMzZkYzY0ZTdjMjFlYmFlMzIyMWRkMiIsImlhdCI6MTY2NDUzOTc2MywiZXhwIjoxNjY0NTQzMzYzfQ.VUmHB2uIV1lQlSRWgHjT9_Rm3xJwa28dzGZGKSoWka4
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RhdXMzIiwiaWQiOiI2MzM3ZTM3YWUxZDA0OWI1MDQyYTM3Y2QiLCJpYXQiOjE2NjQ2MDcxMjAsImV4cCI6MTY2NDYxMDcyMH0.wFGJDYwPaSQeqHymjxIjSelNk3kc-c2pfIf3KU69ZH4
 
 {                                   
   "author": "Michael Chan",           

@@ -41,8 +41,8 @@ describe('api tests', () => {
     await api.post('/api/users/').send(newUser)
 
     const userToBeLoggedIn = {
-      username:'steffe',
-      password:'muumiukko'
+      username: 'steffe',
+      password: 'muumiukko'
     }
     const response2 = await api.post('/api/login/').send(userToBeLoggedIn)
 
@@ -82,8 +82,8 @@ describe('api tests', () => {
     await api.post('/api/users/').send(newUser)
 
     const userToBeLoggedIn = {
-      username:'steffe',
-      password:'muumiukko'
+      username: 'steffe',
+      password: 'muumiukko'
     }
 
     const response = await api.post('/api/login/').send(userToBeLoggedIn)
@@ -130,8 +130,8 @@ describe('api tests', () => {
     await api.post('/api/users/').send(newUser)
 
     const userToBeLoggedIn = {
-      username:'steffe',
-      password:'muumiukko'
+      username: 'steffe',
+      password: 'muumiukko'
     }
 
     const response = await api.post('/api/login/').send(userToBeLoggedIn)
@@ -183,18 +183,55 @@ describe('api tests', () => {
   })
 
   test('4.13 a blog can be removed', async () => {
-    const blogsAtStart = await helper.blogsInDb()
-    const blogToRemove = blogsAtStart[0]
+
+    const newUser = {
+      username: 'steffe',
+      name: 'Stefan Ylimäki',
+      password: 'muumiukko'
+    }
+
+    await api.post('/api/users/').send(newUser)
+
+    const userToBeLoggedIn = {
+      username: 'steffe',
+      password: 'muumiukko'
+    }
+
+    const response = await api.post('/api/login/').send(userToBeLoggedIn)
+
+    let token = 'bearer '
+    token += response.body.token
+
+    const newBlog = {
+      id: '6a422b3a1b54a676234d17f9',
+      title: 'Pekka Puupään seikkailut',
+      author: 'Pekka Puupää',
+      url: 'http://pekkapuupaa.com',
+      likes: 2
+    }
+
+    const res2 = await api
+      .post('/api/blogs/')
+      .send(newBlog)
+      .set('Authorization', token)
+      .expect(201)
+      .expect('Content-Type', /application\/json/)
+
+    const blogsAtMiddle = await helper.blogsInDb()
+    expect(blogsAtMiddle).toHaveLength(helper.initialBlogs.length + 1)
+    const titles2 = blogsAtMiddle.map(r => r.title)
+    expect(titles2).toContain(res2.body.title)
 
     await api
-      .delete(`/api/blogs/${blogToRemove.id}`)
+      .delete(`/api/blogs/${res2.body.id}`)
+      .set('Authorization', token)
       .expect(204)
 
     const blogsAtEnd = await helper.blogsInDb()
-    expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length - 1)
+    expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length)
 
     const titles = blogsAtEnd.map(r => r.title)
-    expect(titles).not.toContain(blogToRemove.title)
+    expect(titles).not.toContain(res2.body.title)
   })
 
   test('4.14 blog can be edited', async () => {
@@ -210,6 +247,56 @@ describe('api tests', () => {
     const blogsAtEnd = await helper.blogsInDb()
     expect(blogsAtEnd[0].likes).toBe(100)
 
+  })
+
+  test('4.23 a blog cant be removed without the token', async () => {
+
+    const newUser = {
+      username: 'steffe',
+      name: 'Stefan Ylimäki',
+      password: 'muumiukko'
+    }
+
+    await api.post('/api/users/').send(newUser)
+
+    const userToBeLoggedIn = {
+      username: 'steffe',
+      password: 'muumiukko'
+    }
+
+    const response = await api.post('/api/login/').send(userToBeLoggedIn)
+
+    let token = 'bearer '
+    token += response.body.token
+
+    const newBlog = {
+      id: '6a422b3a1b54a676234d17f9',
+      title: 'Pekka Puupään seikkailut',
+      author: 'Pekka Puupää',
+      url: 'http://pekkapuupaa.com',
+      likes: 2
+    }
+
+    const res2 = await api
+      .post('/api/blogs/')
+      .send(newBlog)
+      .set('Authorization', token)
+      .expect(201)
+      .expect('Content-Type', /application\/json/)
+
+    const blogsAtMiddle = await helper.blogsInDb()
+    expect(blogsAtMiddle).toHaveLength(helper.initialBlogs.length + 1)
+    const titles2 = blogsAtMiddle.map(r => r.title)
+    expect(titles2).toContain(res2.body.title)
+
+    await api
+      .delete(`/api/blogs/${res2.body.id}`)
+      .expect(401)
+
+    const blogsAtEnd = await helper.blogsInDb()
+    expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length + 1)
+    const titles = blogsAtEnd.map(r => r.title)
+    expect(titles).toContain(res2.body.title)
   })
 })
 
